@@ -29,7 +29,7 @@ services:
   db:
     image: mysql:5.7
     container_name: mysql
-    restart: unless-stopped
+    restart: always
     ports:
       - "3306:3306"
     environment:
@@ -43,7 +43,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
-    restart: unless-stopped
+    restart: always
     ports:
       - "8081:80" # Port untuk phpMyAdmin
     environment:
