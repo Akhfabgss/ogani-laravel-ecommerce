@@ -1,14 +1,28 @@
-# Gunakan Node.js base image
-FROM node:18
-
-# Buat direktori kerja
-WORKDIR /app
-
-# Salin file ke dalam image
-COPY . .
+FROM php:8.1-fpm
 
 # Install dependencies
-RUN npm install
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl
 
-# Jalankan aplikasi
-CMD ["npm", "start"]
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www
+
+COPY . .
+
+RUN composer install
+
+RUN chmod -R 755 /var/www/storage
+RUN chmod -R 755 /var/www/bootstrap/cache
