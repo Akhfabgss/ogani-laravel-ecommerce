@@ -14,4 +14,16 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
+# Install pnpm
+RUN npm install -g pnpm
+
 WORKDIR /var/www/html
+
+# Copy project files
+COPY . .
+
+# Install PHP dependencies
+RUN composer install
+
+# Install Node.js dependencies
+RUN pnpm install

@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: temutukar
-    container_name: temutukar
+    image: ogani
+    container_name: ogani
     volumes:
       - .:/var/www/html
     networks:
